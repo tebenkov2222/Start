@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     #region public
     public GameObject brevno, hand;
+    public GameObject[] Models;
     public float SizeX = 1, SizeY = 1, SizeZ = 1, deltaSize = 0.1f;
     #endregion
     #region private
     private GameObject InHand = null;
-    private int Size = 0; 
+    private int Size = 0, Selected = 0; 
     #endregion
     // Update is called once per frame
     void Update()
@@ -20,35 +21,60 @@ public class PlayerController : MonoBehaviour
     }
     private void CheckButton()
     {
-        if (Input.GetKey(KeyCode.R) && InHand == null)
+        if (InHand == null)
         {
-            InHand = Instantiate(brevno, hand.gameObject.transform.position, Quaternion.identity);
-            InHand.GetComponentInChildren<CapsuleCollider>().enabled = false;
+            if (Input.GetKey(KeyCode.R))
+            {
+                InHand = Instantiate(brevno, hand.gameObject.transform.position, Quaternion.identity);
+                InHand.GetComponent<Rigidbody>().useGravity = false;
+                InHand.GetComponentInChildren<CapsuleCollider>().enabled = false;
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                if (Selected != Models.Length - 1)
+                {
+                    Selected += 1;
+                }
+                else Selected = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                if (Selected > 0)
+                {
+                    Selected -= 1;
+                }
+                else Selected = 0;
+            }
         }
-        if (Input.GetKey(KeyCode.Space) && InHand != null)
+        else
         {
-            InHand.GetComponentInChildren<CapsuleCollider>().enabled = false;
-            InHand = null;
-        }
-        if (Input.GetKey(KeyCode.Z) && InHand != null)
-        {
-            Size = 0;
-        }
-        if (Input.GetKey(KeyCode.X) && InHand != null)
-        {
-            Size = 1;
-        }
-        if (Input.GetKey(KeyCode.Y) && InHand != null)
-        {
-            Size = 2;
-        }
-        if (Input.GetKey(KeyCode.Plus) && InHand != null)
-        {
-            Resize(true);
-        }
-        if (Input.GetKey(KeyCode.Minus) && InHand != null)
-        {
-            Resize(false);
+            if (Input.GetKey(KeyCode.Z))
+            {
+                Size = 0;
+            }
+            if (Input.GetKey(KeyCode.X))
+            {
+                Size = 1;
+            }
+            if (Input.GetKey(KeyCode.Y))
+            {
+                Size = 2;
+            }
+            if (Input.GetKey(KeyCode.Keypad8))
+            {
+                Resize(true);
+            }
+            if (Input.GetKey(KeyCode.Keypad2))
+            {
+                Resize(false);
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                InHand.GetComponent<Rigidbody>().useGravity = true;
+                InHand.GetComponentInChildren<CapsuleCollider>().enabled = true;
+                InHand = null;
+                SizeX = 1; SizeY = 1; SizeZ = 1;
+            }
         }
     }
     private void Resize(bool Sum)
@@ -58,19 +84,19 @@ public class PlayerController : MonoBehaviour
             case 0:
                 {
                     if (Sum) SizeZ += deltaSize;
-                    else SizeZ -= deltaSize;
+                    else if (SizeZ > 0.1f) SizeZ -= deltaSize;
                     break;
                 }
             case 1:
                 {
                     if (Sum) SizeX += deltaSize;
-                    else SizeX -= deltaSize;
+                    else if (SizeX > 0.1f) SizeX -= deltaSize;
                     break;
                 }
             case 2:
                 {
                     if (Sum) SizeY += deltaSize;
-                    else SizeY -= deltaSize;
+                    else if (SizeY > 0.1f) SizeY -= deltaSize;
                     break;
                 }
         }
