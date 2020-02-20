@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region public
-    public GameObject brevno, hand;
+    public GameObject UI, hand;
     public GameObject[] Models;
     public float SizeX = 1, SizeY = 1, SizeZ = 1, deltaSize = 0.1f;
     #endregion
@@ -29,21 +29,23 @@ public class PlayerController : MonoBehaviour
                 InHand.GetComponent<Rigidbody>().useGravity = false;
                 InHand.GetComponentInChildren<MeshCollider>().enabled = false;
             }
-            if (Input.GetKeyDown(KeyCode.Keypad6))
+            if (Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6))
             {
                 if (Selected != Models.Length - 1)
                 {
                     Selected += 1;
                 }
                 else Selected = 0;
+                UI.GetComponent<Selected>().EnableUI(Selected);
             }
-            if (Input.GetKeyDown(KeyCode.Keypad4))
+            if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
             {
                 if (Selected > 0)
                 {
                     Selected -= 1;
                 }
                 else Selected = 0;
+                UI.GetComponent<Selected>().EnableUI(Selected);
             }
         }
         else
@@ -60,11 +62,11 @@ public class PlayerController : MonoBehaviour
             {
                 Size = 2;
             }
-            if (Input.GetKey(KeyCode.Keypad8))
+            if (Input.GetKey(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Alpha8))
             {
                 Resize(true);
             }
-            if (Input.GetKey(KeyCode.Keypad2))
+            if (Input.GetKey(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
             {
                 Resize(false);
             }
