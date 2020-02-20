@@ -7,6 +7,8 @@ ModelImporter:
     400000: //RootNode
     2100000: FrameWindow
     2100002: Glass
+    2100004: FrameWindow.003
+    2100006: Glass.003
     2300000: //RootNode
     3300000: //RootNode
     4300000: 1.003

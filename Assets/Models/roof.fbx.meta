@@ -7,6 +7,8 @@ ModelImporter:
     400000: //RootNode
     2100000: Roof
     2100002: Wood
+    2100004: Roof.004
+    2100006: Wood.006
     2300000: //RootNode
     3300000: //RootNode
     4300000: Cylinder.001

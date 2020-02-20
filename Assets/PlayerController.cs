@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.R))
             {
-                InHand = Instantiate(brevno, hand.gameObject.transform.position, Quaternion.identity);
+                InHand = Instantiate(Models[Selected], hand.gameObject.transform.position, Quaternion.identity);
                 InHand.GetComponent<Rigidbody>().useGravity = false;
-                InHand.GetComponentInChildren<CapsuleCollider>().enabled = false;
+                InHand.GetComponentInChildren<MeshCollider>().enabled = false;
             }
             if (Input.GetKeyDown(KeyCode.Keypad6))
             {
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else Selected = 0;
             }
-            if (Input.GetKeyDown(KeyCode.Keypad6))
+            if (Input.GetKeyDown(KeyCode.Keypad4))
             {
                 if (Selected > 0)
                 {
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 InHand.GetComponent<Rigidbody>().useGravity = true;
-                InHand.GetComponentInChildren<CapsuleCollider>().enabled = true;
+                InHand.GetComponentInChildren<MeshCollider>().enabled = true;
                 InHand = null;
                 SizeX = 1; SizeY = 1; SizeZ = 1;
             }
